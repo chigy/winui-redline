@@ -16,10 +16,10 @@ For initial project, we are targeting following controls:
 - Controls in all the states
 - Dark/light – side by side
 - Redline
- - Color – SystemThemeBrush + Hex value
- - Size (includes thickness and corner radius)
- - Spacing
- - Text style
+  - Color – SystemThemeBrush + Hex value
+  - Size (includes thickness and corner radius)
+  - Spacing
+  - Text style
 
 ## Not in the initial scope, but interesting future ideas
 - Having a single page with all the controls in view where the individual pages created here would be linked from
