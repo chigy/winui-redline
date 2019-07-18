@@ -24,14 +24,9 @@ namespace RedlinesProject
         {
             this.InitializeComponent();
 
-            StateViewer.ControlType = typeof(Button);
-            StateViewer.States = new List<string>
-            {
-                "Normal",
-                "PointerOver",
-                "Pressed",
-                "Disabled",
-            };
+            ControlCardsGridView.Items.Add(new ControlCard(typeof(Button)));
+            ControlCardsGridView.Items.Add(new ControlCard(typeof(CheckBox)));
+            ControlCardsGridView.Items.Add(new ControlCard(typeof(Slider)));
         }
     }
 }

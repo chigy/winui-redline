@@ -4,4 +4,18 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:RedlinesProject">
 
+    <Application.Resources>
+        <ResourceDictionary>
+            <Thickness x:Key="GridViewItemRevealBorderThemeThickness">0</Thickness>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <SolidColorBrush x:Key="MainPageBackground" Color="#fff5f5f5"/>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="MainPageBackground" Color="#ff1c1b1b"/>
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+
 </Application>

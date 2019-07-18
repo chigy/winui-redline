@@ -10,14 +10,10 @@
     d:DesignWidth="400"
     IsHitTestVisible="False">
 
-    <UserControl.Resources>
-        <Thickness x:Key="GridViewItemRevealBorderThemeThickness">0</Thickness>
-    </UserControl.Resources>
-
     <GridView x:Name="StateGridView" SelectionMode="None">
         <GridView.ItemsPanel>
             <ItemsPanelTemplate>
-                <StackPanel Orientation="Vertical" Spacing="12"/>
+                <StackPanel Orientation="Vertical" Spacing="35"/>
             </ItemsPanelTemplate>
         </GridView.ItemsPanel>
     </GridView>

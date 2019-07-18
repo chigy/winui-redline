@@ -76,6 +76,7 @@ namespace RedlinesProject
 
                 Control c = Activator.CreateInstance(_controlType) as Control;
                 c.Loaded += Control_Loaded;
+
                 c.DataContext = state;
 
                 ContentControl cc = c as ContentControl;
@@ -85,8 +86,15 @@ namespace RedlinesProject
                     cc.Content = s[s.Length - 1];
                 }
 
-                sp.Children.Add(c);
+                //Make slider pretty to look at
+                if (_controlType == typeof(Slider))
+                {
+                    c.Width = 200;
+                    (c as Slider).Value = 35;
+                    (c as Slider).Maximum = 100;
+                }
 
+                sp.Children.Add(c);
                 StateGridView.Items.Add(sp);
             }
         }
@@ -96,7 +104,12 @@ namespace RedlinesProject
             Control c = sender as Control;
             if (c != null)
             {
-                VisualStateManager.GoToState(c, c.DataContext as string, false);
+                bool foundState = VisualStateManager.GoToState(c, c.DataContext as string, false);
+
+                if(!foundState)
+                {
+                    StateGridView.Items.Remove(c.Parent);
+                }
             }
         }
     }
