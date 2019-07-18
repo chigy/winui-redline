@@ -1,4 +1,4 @@
-# WinUi Redline
+# WinUI Redline
 An app that generates design values for WinUI.
 
 ## Intended target audiences
