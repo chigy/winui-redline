@@ -32,6 +32,13 @@ namespace RedlinesProject
                 "Pressed",
                 "Disabled",
             };
+
+            Loaded += MainPage_Loaded;
+        }
+
+        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            SizeRedline.Draw(LayoutRoot, MyButton, RedlinesCanvas);
         }
     }
 }

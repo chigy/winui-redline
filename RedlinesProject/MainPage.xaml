@@ -8,7 +8,16 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <local:ControlStateViewer x:Name="StateViewer" Margin="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Button x:Name="MyButton" Content="Button" Margin="28"/>
+        <Canvas x:Name="RedlinesCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+        <local:ControlStateViewer x:Name="StateViewer" Grid.Row="1" Margin="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+
     </Grid>
 </Page>
