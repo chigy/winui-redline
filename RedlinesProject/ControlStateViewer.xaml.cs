@@ -69,10 +69,10 @@ namespace RedlinesProject
                 StackPanel sp = new StackPanel();
                 sp.Margin = new Thickness(4);
 
-                TextBlock textBlock = new TextBlock();
-                textBlock.Text = state;
-                textBlock.FontSize = 9;
-                sp.Children.Add(textBlock);
+                //TextBlock textBlock = new TextBlock();
+                //textBlock.Text = state;
+                //textBlock.FontSize = 9;
+                //sp.Children.Add(textBlock);
 
                 Control c = Activator.CreateInstance(_controlType) as Control;
                 c.Loaded += Control_Loaded;
@@ -92,6 +92,10 @@ namespace RedlinesProject
                     c.Width = 200;
                     (c as Slider).Value = 35;
                     (c as Slider).Maximum = 100;
+                }
+                if (_controlType == typeof(Button))
+                {
+                    c.Width = 150;
                 }
 
                 sp.Children.Add(c);

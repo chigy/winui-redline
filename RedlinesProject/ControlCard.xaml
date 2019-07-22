@@ -7,20 +7,42 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollViewer VerticalScrollMode="Enabled" VerticalScrollBarVisibility="Visible">
-        <Grid x:Name="ControlCardHolder" CornerRadius="2" MinWidth="450" Margin="0" VerticalAlignment="Top">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
 
-            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="0" RequestedTheme="Light">
-                <local:ControlStateViewer x:Name="StateViewerLightTheme" Margin="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            </Grid>
+        <TextBlock Grid.Column="1" Grid.Row="0" x:Name="LightUnselectedLabel" FontSize="10" FontWeight="SemiBold" Margin="30, 30, 30, 0"
+                   Foreground="{StaticResource SystemAccentColor}" Text="UNSELECTED" HorizontalAlignment="Left"/>
+        <TextBlock Grid.Column="2" Grid.Row="0" x:Name="LightSelectedLabel" FontSize="10" FontWeight="SemiBold" Margin="30, 30, 30, 0"
+                   Foreground="{StaticResource SystemAccentColor}" Text="SELECTED" Visibility="Collapsed" HorizontalAlignment="Left"/>
+        <TextBlock Grid.Column="3" Grid.Row="0" x:Name="LightIndeterminateLabel" FontSize="10" FontWeight="SemiBold" Margin="30, 30, 30, 0"
+                   Foreground="{StaticResource SystemAccentColor}" Text="INDETERMINATE" Visibility="Collapsed" HorizontalAlignment="Left"/>
 
-            <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Grid.Column="1" RequestedTheme="Dark">
-                <local:ControlStateViewer x:Name="StateViewerDarkTheme" Margin="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-            </Grid>
+        <Grid x:Name="LightControlContainer_UnselectedGrid"
+            Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10">
         </Grid>
-    </ScrollViewer>
+
+        <Grid x:Name="LightControlContainer_SelectedGrid"
+            Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10">
+        </Grid>
+
+        <Grid x:Name="LightControlContainer_IndeterminateGrid"
+            Grid.Column="3"  Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10">
+        </Grid>
+
+        <TextBlock Grid.Column="0" Grid.Row="1" Text="REST" FontWeight="SemiBold" FontSize="10" Foreground="{ThemeResource StateTextColor}" Margin="15,25"/>
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="HOVER" FontWeight="SemiBold" FontSize="10" Foreground="{ThemeResource StateTextColor}" Margin="15, 15, 5, 115"/>
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="PRESSED" FontWeight="SemiBold" FontSize="10" Foreground="{ThemeResource StateTextColor}" Margin="15, 88, 5, 0"/>
+        <TextBlock Grid.Column="0" Grid.Row="2" Text="DISABLED" FontWeight="SemiBold" FontSize="10" Foreground="{ThemeResource StateTextColor}" Margin="15, 155, 5, 0"/>
+    </Grid>
 </Page>
