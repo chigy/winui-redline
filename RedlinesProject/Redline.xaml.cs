@@ -54,6 +54,8 @@ namespace RedlinesProject
         private void Redline_Loaded(object sender, RoutedEventArgs e)
         {
             VisualStateManager.GoToState(this, IsHorizontal() ? "Horizontal" : "Vertical", false);
+
+            VisualStateManager.GoToState(this, _side.ToString(), false);
         }
 
         private bool IsHorizontal()

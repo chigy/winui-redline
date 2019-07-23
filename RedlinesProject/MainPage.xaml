@@ -14,7 +14,11 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Button x:Name="MyButton" Content="Button" Margin="28"/>
+        <StackPanel Orientation="Vertical" Margin="60" Spacing="60">
+            <Button x:Name="MyButton" Content="Button"/>
+            <CheckBox x:Name="MyCheckBox" Content="CheckBox"/>
+            <Slider x:Name="MySlider" Width="100" HorizontalAlignment="Left"/>
+        </StackPanel>
         <Canvas x:Name="RedlinesCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 
         <local:ControlStateViewer x:Name="StateViewer" Grid.Row="1" Margin="24" HorizontalAlignment="Left" VerticalAlignment="Top"/>

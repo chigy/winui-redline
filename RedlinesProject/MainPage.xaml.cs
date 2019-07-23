@@ -39,6 +39,8 @@ namespace RedlinesProject
         private void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             SizeRedline.Draw(LayoutRoot, MyButton, RedlinesCanvas);
+            SizeRedline.Draw(LayoutRoot, MyCheckBox, RedlinesCanvas);
+            SizeRedline.Draw(LayoutRoot, MySlider, RedlinesCanvas);
         }
     }
 }
