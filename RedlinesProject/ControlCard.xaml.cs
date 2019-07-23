@@ -71,15 +71,15 @@ namespace RedlinesProject
 
         private void CreateControlStates(Type ctrlType)
         {
-            LightControlContainer_UnselectedGrid.Children.Add(CreateControlStateViewer(ctrlType, unselectedStates));
+            ControlContainer_UnselectedGrid.Children.Add(CreateControlStateViewer(ctrlType, unselectedStates));
 
             if (ctrlType == typeof(CheckBox))
             {
-                LightSelectedLabel.Visibility = Visibility.Visible;
-                LightIndeterminateLabel.Visibility = Visibility.Visible;
+                SelectedLabel.Visibility = Visibility.Visible;
+                IndeterminateLabel.Visibility = Visibility.Visible;
 
-                LightControlContainer_SelectedGrid.Children.Add(CreateControlStateViewer(ctrlType, selectedStates));
-                LightControlContainer_IndeterminateGrid.Children.Add(CreateControlStateViewer(ctrlType, indeterminateStates));
+                ControlContainer_SelectedGrid.Children.Add(CreateControlStateViewer(ctrlType, selectedStates));
+                ControlContainer_IndeterminateGrid.Children.Add(CreateControlStateViewer(ctrlType, indeterminateStates));
             }
         }
     }

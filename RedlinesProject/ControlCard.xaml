@@ -21,22 +21,22 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <TextBlock Grid.Column="1" Grid.Row="0" x:Name="LightUnselectedLabel" FontSize="10" FontWeight="SemiBold" Margin="30, 30, 30, 0"
+        <TextBlock Grid.Column="1" Grid.Row="0" x:Name="UnselectedLabel" FontSize="10" FontWeight="SemiBold" Margin="30, 30, 30, 0"
                    Foreground="{StaticResource SystemAccentColor}" Text="UNSELECTED" HorizontalAlignment="Left"/>
-        <TextBlock Grid.Column="2" Grid.Row="0" x:Name="LightSelectedLabel" FontSize="10" FontWeight="SemiBold" Margin="30, 30, 30, 0"
+        <TextBlock Grid.Column="2" Grid.Row="0" x:Name="SelectedLabel" FontSize="10" FontWeight="SemiBold" Margin="30, 30, 30, 0"
                    Foreground="{StaticResource SystemAccentColor}" Text="SELECTED" Visibility="Collapsed" HorizontalAlignment="Left"/>
-        <TextBlock Grid.Column="3" Grid.Row="0" x:Name="LightIndeterminateLabel" FontSize="10" FontWeight="SemiBold" Margin="30, 30, 30, 0"
+        <TextBlock Grid.Column="3" Grid.Row="0" x:Name="IndeterminateLabel" FontSize="10" FontWeight="SemiBold" Margin="30, 30, 30, 0"
                    Foreground="{StaticResource SystemAccentColor}" Text="INDETERMINATE" Visibility="Collapsed" HorizontalAlignment="Left"/>
 
-        <Grid x:Name="LightControlContainer_UnselectedGrid"
+        <Grid x:Name="ControlContainer_UnselectedGrid"
             Grid.Column="1" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10">
         </Grid>
 
-        <Grid x:Name="LightControlContainer_SelectedGrid"
+        <Grid x:Name="ControlContainer_SelectedGrid"
             Grid.Column="2" Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10">
         </Grid>
 
-        <Grid x:Name="LightControlContainer_IndeterminateGrid"
+        <Grid x:Name="ControlContainer_IndeterminateGrid"
             Grid.Column="3"  Grid.Row="1" Grid.RowSpan="3" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="10">
         </Grid>
 
