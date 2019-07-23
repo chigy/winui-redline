@@ -30,6 +30,7 @@
                         <Setter Target="HorizontalLineContainer.(Grid.Row)" Value="1"/>
                         <Setter Target="HorizontalLabel.(Grid.Row)" Value="0"/>
                         <Setter Target="HorizontalTopRow.Height" Value="Auto"/>
+                        <Setter Target="HorizontalCrossBar.VerticalAlignment" Value="Top"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Left">
@@ -37,6 +38,7 @@
                         <Setter Target="VerticalLineContainer.(Grid.Column)" Value="1"/>
                         <Setter Target="VerticalLabel.(Grid.Column)" Value="0"/>
                         <Setter Target="VerticalLeftRow.Width" Value="Auto"/>
+                        <Setter Target="VerticalCrossBar.HorizontalAlignment" Value="Left"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -49,9 +51,9 @@
             </Grid.RowDefinitions>
 
             <Grid x:Name="HorizontalLineContainer">
-                <Border Width="1" Height="9" BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Border Width="1" Height="9" BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                <Border Height="1" BorderBrush="Red" BorderThickness="1" Margin="0,4,0,0" VerticalAlignment="Top"/>
+                <Border Width="1" BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Stretch"/>
+                <Border Width="1" BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
+                <Border x:Name="HorizontalCrossBar" Height="1" BorderBrush="Red" BorderThickness="1" Margin="0,4,0,4" VerticalAlignment="Bottom"/>
             </Grid>
 
             <TextBlock x:Name="HorizontalLabel" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="Red" FontSize="9" Margin="-5,-2,-5,0"/>
@@ -64,9 +66,9 @@
             </Grid.ColumnDefinitions>
 
             <Grid x:Name="VerticalLineContainer">
-                <Border Width="9" Height="1" BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-                <Border Width="9" Height="1" BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                <Border Width="1" BorderBrush="Red" BorderThickness="1" Margin="4,0,0,0" HorizontalAlignment="Left"/>
+                <Border Height="1" BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Top"/>
+                <Border Height="1" BorderBrush="Red" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                <Border x:Name="VerticalCrossBar" Width="1" BorderBrush="Red" BorderThickness="1" Margin="4,0,4,0" HorizontalAlignment="Right"/>
             </Grid>
 
             <TextBlock x:Name="VerticalLabel" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Red" FontSize="9" Margin="1,-5,0,-5"/>
