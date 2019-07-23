@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Bluetooth.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -79,27 +80,32 @@ namespace RedlinesProject
 
                 c.DataContext = state;
 
-                ContentControl cc = c as ContentControl;
-                if (cc != null)
-                {
-                    string[] s = _controlType.ToString().Split('.');
-                    cc.Content = s[s.Length - 1];
-                }
-
-                //Make slider pretty to look at
-                if (_controlType == typeof(Slider))
-                {
-                    c.Width = 200;
-                    (c as Slider).Value = 35;
-                    (c as Slider).Maximum = 100;
-                }
-                if (_controlType == typeof(Button))
-                {
-                    c.Width = 150;
-                }
+                MakeControlPretty(c, _controlType);
 
                 sp.Children.Add(c);
                 StateGridView.Items.Add(sp);
+            }
+        }
+
+        public static void MakeControlPretty(Control c, Type controlType)
+        {
+            ContentControl cc = c as ContentControl;
+            if (cc != null)
+            {
+                string[] s = controlType.ToString().Split('.');
+                cc.Content = s[s.Length - 1];
+            }
+
+            //Make slider pretty to look at
+            if (controlType == typeof(Slider))
+            {
+                c.Width = 200;
+                (c as Slider).Value = 35;
+                (c as Slider).Maximum = 100;
+            }
+            if (controlType == typeof(Button))
+            {
+                c.Width = 150;
             }
         }
 
