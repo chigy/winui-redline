@@ -13,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.UI.Xaml.Shapes;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -29,7 +30,7 @@ namespace RedlinesProject
 
             ControlStateViewer.MakeControlPretty(c, controlType);
 
-            LayoutRoot.Children.Add(c);
+            LayoutRoot.Children.Insert(0, c);
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
@@ -38,7 +39,8 @@ namespace RedlinesProject
             Draw(LayoutRoot, c, RedlineCanvas);
         }
 
-        private const double _redlineSize = 20;
+        private const double _redlineSpace = 20;
+        private const double _redlineMinSize = 9;
 
         private List<string> _unwantedNames = new List<string>() { "HorizontalDecreaseRect" };
 
@@ -60,7 +62,7 @@ namespace RedlinesProject
             DebugSpaces(depth);
             Debug.WriteLine(fe.Name + "." + propertyName + " = " + value);
 
-            Redline redline = new Redline(side, value);
+            Redline redline = new Redline(side, _redlineMinSize, value);
             Canvas.SetLeft(redline, x);
             Canvas.SetTop(redline, y);
             target.Children.Add(redline);
@@ -91,23 +93,34 @@ namespace RedlinesProject
                 }
             }
 
+            GeneralTransform t = fe.TransformToVisual(container);
+            Windows.Foundation.Point pos = t.TransformPoint(new Windows.Foundation.Point(0, 0));
+
             // Redlines should only be reported underneath the control level
             if (depth == 0)
             {
                 Debug.WriteLine(fe.Name);
+
+                // Draw bounding rectangle
+                Rectangle rc = new Rectangle();
+                rc.Width = fe.ActualWidth;
+                rc.Height = fe.ActualHeight;
+                rc.Stroke = new SolidColorBrush(Windows.UI.Color.FromArgb(150, 100, 150, 200));
+                rc.StrokeThickness = 1;
+                rc.StrokeDashArray = new DoubleCollection() { 3 };
+                Canvas.SetLeft(rc, pos.X);
+                Canvas.SetTop(rc, pos.Y);
+                target.Children.Add(rc);
             }
             else
             {
-                GeneralTransform t = fe.TransformToVisual(container);
-                Windows.Foundation.Point pos = t.TransformPoint(new Windows.Foundation.Point(0, 0));
-
                 var width = fe.Width;
                 var height = fe.Height;
 
                 if (!Double.IsNaN(width) && width > 0)
                 {
                     double x = pos.X;
-                    double y = (pos.Y - _redlineSize) - redlineCount[(int)RedlineSide.Top] * _redlineSize;
+                    double y = (pos.Y - _redlineSpace) - redlineCount[(int)RedlineSide.Top] * _redlineSpace;
 
                     AddRedline(x, y, RedlineSide.Top, width, target, depth, fe, "Width");
                     redlineCount[(int)RedlineSide.Top]++;
@@ -115,7 +128,7 @@ namespace RedlinesProject
 
                 if (!Double.IsNaN(height) && height > 0)
                 {
-                    double x = (pos.X - _redlineSize) - redlineCount[(int)RedlineSide.Left] * _redlineSize;
+                    double x = (pos.X - _redlineSpace) - redlineCount[(int)RedlineSide.Left] * _redlineSpace;
                     double y = pos.Y;
 
                     AddRedline(x, y, RedlineSide.Left, height, target, depth, fe, "Height");
@@ -138,7 +151,7 @@ namespace RedlinesProject
                 if (padding.Left > 0)
                 {
                     double x = pos.X;
-                    double y = pos.Y + fe.ActualHeight + 1 + redlineCount[(int)RedlineSide.Bottom] * _redlineSize;
+                    double y = pos.Y + fe.ActualHeight + 1 + redlineCount[(int)RedlineSide.Bottom] * _redlineSpace;
 
                     AddRedline(x, y, RedlineSide.Bottom, padding.Left, target, depth, fe, "Padding.Left");
                 }
@@ -146,14 +159,14 @@ namespace RedlinesProject
                 if (padding.Right > 0)
                 {
                     double x = pos.X + fe.ActualWidth - padding.Right;
-                    double y = pos.Y + fe.ActualHeight + 1 + redlineCount[(int)RedlineSide.Bottom] * _redlineSize;
+                    double y = pos.Y + fe.ActualHeight + 1 + redlineCount[(int)RedlineSide.Bottom] * _redlineSpace;
 
                     AddRedline(x, y, RedlineSide.Bottom, padding.Right, target, depth, fe, "Padding.Right");
                 }
 
                 if (padding.Top > 0)
                 {
-                    double x = pos.X + fe.ActualWidth + 1 + redlineCount[(int)RedlineSide.Right] * _redlineSize;
+                    double x = pos.X + fe.ActualWidth + 1 + redlineCount[(int)RedlineSide.Right] * _redlineSpace;
                     double y = pos.Y;
 
                     AddRedline(x, y, RedlineSide.Right, padding.Top, target, depth, fe, "Padding.Top");
@@ -161,7 +174,7 @@ namespace RedlinesProject
 
                 if (padding.Bottom > 0)
                 {
-                    double x = pos.X + fe.ActualWidth + 1 + redlineCount[(int)RedlineSide.Right] * _redlineSize;
+                    double x = pos.X + fe.ActualWidth + 1 + redlineCount[(int)RedlineSide.Right] * _redlineSpace;
                     double y = pos.Y + fe.ActualHeight - padding.Bottom;
 
                     AddRedline(x, y, RedlineSide.Right, padding.Bottom, target, depth, fe, "Padding.Bottom");
@@ -170,7 +183,7 @@ namespace RedlinesProject
                 if (margin.Left > 0)
                 {
                     double x = pos.X - margin.Left;
-                    double y = pos.Y + fe.ActualHeight + 1 + redlineCount[(int)RedlineSide.Bottom] * _redlineSize;
+                    double y = pos.Y + fe.ActualHeight + 1 + redlineCount[(int)RedlineSide.Bottom] * _redlineSpace;
 
                     AddRedline(x, y, RedlineSide.Bottom, margin.Left, target, depth, fe, "Margin.Left");
                 }
@@ -178,14 +191,14 @@ namespace RedlinesProject
                 if (margin.Right > 0)
                 {
                     double x = pos.X + fe.ActualWidth;
-                    double y = pos.Y + fe.ActualHeight + 1 + redlineCount[(int)RedlineSide.Bottom] * _redlineSize;
+                    double y = pos.Y + fe.ActualHeight + 1 + redlineCount[(int)RedlineSide.Bottom] * _redlineSpace;
 
                     AddRedline(x, y, RedlineSide.Bottom, margin.Right, target, depth, fe, "Margin.Right");
                 }
 
                 if (margin.Top > 0)
                 {
-                    double x = pos.X + fe.ActualWidth + 1 + redlineCount[(int)RedlineSide.Right] * _redlineSize;
+                    double x = pos.X + fe.ActualWidth + 1 + redlineCount[(int)RedlineSide.Right] * _redlineSpace;
                     double y = pos.Y - margin.Top;
 
                     AddRedline(x, y, RedlineSide.Right, margin.Top, target, depth, fe, "Margin.Top");
@@ -193,7 +206,7 @@ namespace RedlinesProject
 
                 if (margin.Bottom > 0)
                 {
-                    double x = pos.X + fe.ActualWidth + 1 + redlineCount[(int)RedlineSide.Right] * _redlineSize;
+                    double x = pos.X + fe.ActualWidth + 1 + redlineCount[(int)RedlineSide.Right] * _redlineSpace;
                     double y = pos.Y + fe.ActualHeight;
 
                     AddRedline(x, y, RedlineSide.Right, margin.Bottom, target, depth, fe, "Margin.Bottom");

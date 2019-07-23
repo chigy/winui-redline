@@ -29,12 +29,14 @@
                     <VisualState.Setters>
                         <Setter Target="HorizontalLineContainer.(Grid.Row)" Value="1"/>
                         <Setter Target="HorizontalLabel.(Grid.Row)" Value="0"/>
+                        <Setter Target="HorizontalTopRow.Height" Value="Auto"/>
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="Left">
                     <VisualState.Setters>
                         <Setter Target="VerticalLineContainer.(Grid.Column)" Value="1"/>
                         <Setter Target="VerticalLabel.(Grid.Column)" Value="0"/>
+                        <Setter Target="VerticalLeftRow.Width" Value="Auto"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -42,8 +44,8 @@
 
         <Grid x:Name="HorizontalRoot">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition x:Name="HorizontalTopRow"/>
+                <RowDefinition x:Name="HorizontalBottomRow" Height="Auto"/>
             </Grid.RowDefinitions>
 
             <Grid x:Name="HorizontalLineContainer">
@@ -57,8 +59,8 @@
 
         <Grid x:Name="VerticalRoot" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition x:Name="VerticalLeftRow"/>
+                <ColumnDefinition x:Name="VerticalRightRow" Width="Auto"/>
             </Grid.ColumnDefinitions>
 
             <Grid x:Name="VerticalLineContainer">

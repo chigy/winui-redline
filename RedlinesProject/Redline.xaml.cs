@@ -29,7 +29,7 @@ namespace RedlinesProject
     {
         RedlineSide _side;
 
-        public Redline(RedlineSide side, double value)
+        public Redline(RedlineSide side, double size, double value)
         {
             this.InitializeComponent();
 
@@ -38,15 +38,30 @@ namespace RedlinesProject
             if (IsHorizontal())
             {
                 Width = value;
+                if (_side == RedlineSide.Top)
+                {
+                    HorizontalBottomRow.Height = new GridLength(size);
+                }
+                else
+                {
+                    HorizontalTopRow.Height = new GridLength(size);
+                }
             }
             else
             {
                 Height = value;
+                if (_side == RedlineSide.Left)
+                {
+                    VerticalRightRow.Width = new GridLength(size);
+                }
+                else
+                {
+                    VerticalLeftRow.Width = new GridLength(size);
+                }
             }
 
             HorizontalLabel.Text = value.ToString();
             VerticalLabel.Text = value.ToString();
-
 
             Loaded += Redline_Loaded;
         }
