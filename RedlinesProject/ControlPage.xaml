@@ -24,7 +24,12 @@
             </Grid.ColumnDefinitions>
 
             <Grid x:Name="LightContainer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-              Grid.Column="0" Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+              Grid.Column="0" Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+            </Grid>
             <Grid x:Name="DarkContainer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" RequestedTheme="Dark"
               Grid.Column="1" Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
         </Grid>

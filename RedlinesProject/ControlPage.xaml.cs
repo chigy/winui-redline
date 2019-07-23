@@ -32,6 +32,11 @@ namespace RedlinesProject
             if (e.Parameter != null)
             {
                 LightContainer.Children.Add(new ControlCard(e.Parameter as Type));
+
+                RedlineViewer redlineViewer = new RedlineViewer(e.Parameter as Type);
+                Grid.SetRow(redlineViewer, 1);
+                LightContainer.Children.Add(redlineViewer);
+
                 DarkContainer.Children.Add(new ControlCard(e.Parameter as Type));
             }
 
