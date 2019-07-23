@@ -6,6 +6,10 @@
 
     <Application.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+            </ResourceDictionary.MergedDictionaries>
+            
             <Thickness x:Key="GridViewItemRevealBorderThemeThickness">0</Thickness>
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
