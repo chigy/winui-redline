@@ -6,14 +6,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    d:DesignHeight="300"
-    d:DesignWidth="400"
     IsHitTestVisible="False">
 
-    <GridView x:Name="StateGridView" SelectionMode="None">
+    <GridView x:Name="StateGridView" SelectionMode="None" HorizontalAlignment="Center" VerticalAlignment="Center">
         <GridView.ItemsPanel>
             <ItemsPanelTemplate>
-                <StackPanel Orientation="Vertical" Spacing="35"/>
+                <StackPanel Orientation="Vertical" Spacing="25" HorizontalAlignment="Center" VerticalAlignment="Center"/>
             </ItemsPanelTemplate>
         </GridView.ItemsPanel>
     </GridView>

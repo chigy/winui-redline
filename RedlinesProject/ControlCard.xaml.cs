@@ -22,64 +22,65 @@ namespace RedlinesProject
     /// </summary>
     public sealed partial class ControlCard : Page
     {
+        private List<string> unselectedStates = new List<string>
+        {
+            "Normal",
+            "PointerOver",
+            "Pressed",
+            "Disabled",
+            "UncheckedNormal",
+            "UncheckedPointerOver",
+            "UncheckedPressed",
+            "UncheckedDisabled",
+        };
+
+        private List<string> selectedStates = new List<string>
+        {
+            "CheckedNormal",
+            "CheckedPointerOver",
+            "CheckedPressed",
+            "CheckedDisabled",
+            "FocusEngagedHorizontal",
+            "FocusEngagedVertical",
+            "FocusDisengaged",
+        };
+
+        private List<string> indeterminateStates = new List<string>
+        {
+            "IndeterminateNormal",
+            "IndeterminatePointerOver",
+            "IndeterminatePressed",
+            "IndeterminateDisabled",
+        };
+
         public ControlCard(Type controlType)
         {
             this.InitializeComponent();
-
-            CreateLightThemeControlStates(controlType);
-            CreateDarkThemeControlStates(controlType);
+            
+            CreateControlStates(controlType);
         }
 
-        private void CreateDarkThemeControlStates(Type ctrlType)
+        private ControlStateViewer CreateControlStateViewer(Type cType, List<string> states)
         {
-            StateViewerDarkTheme.ControlType = ctrlType;
-            StateViewerDarkTheme.States = new List<string>
-            {
-                "Normal",
-                "PointerOver",
-                "Pressed",
-                "Disabled",
-                "UncheckedNormal",
-                "UncheckedPointerOver",
-                "UncheckedPressed",
-                "CheckedNormal",
-                "CheckedPointerOver",
-                "CheckedPressed",
-                "CheckedDisabled",
-                "IndeterminateNormal",
-                "IndeterminatePointerOver",
-                "IndeterminatePressed",
-                "IndeterminateDisabled",
-                "FocusEngagedHorizontal",
-                "FocusEngagedVertical",
-                "FocusDisengaged",
-            };
+            ControlStateViewer ctrlStateViewer = new ControlStateViewer();
+            ctrlStateViewer.ControlType = cType;
+            ctrlStateViewer.States = states;
+
+            return ctrlStateViewer;
         }
 
-        private void CreateLightThemeControlStates(Type ctrlType)
+        private void CreateControlStates(Type ctrlType)
         {
-            StateViewerLightTheme.ControlType = ctrlType;
-            StateViewerLightTheme.States = new List<string>
+            ControlContainer_UnselectedGrid.Children.Add(CreateControlStateViewer(ctrlType, unselectedStates));
+
+            if (ctrlType == typeof(CheckBox))
             {
-                "Normal",
-                "PointerOver",
-                "Pressed",
-                "Disabled",
-                "UncheckedNormal",
-                "UncheckedPointerOver",
-                "UncheckedPressed",
-                "CheckedNormal",
-                "CheckedPointerOver",
-                "CheckedPressed",
-                "CheckedDisabled",
-                "IndeterminateNormal",
-                "IndeterminatePointerOver",
-                "IndeterminatePressed",
-                "IndeterminateDisabled",
-                "FocusEngagedHorizontal",
-                "FocusEngagedVertical",
-                "FocusDisengaged",
-            };
+                SelectedLabel.Visibility = Visibility.Visible;
+                IndeterminateLabel.Visibility = Visibility.Visible;
+
+                ControlContainer_SelectedGrid.Children.Add(CreateControlStateViewer(ctrlType, selectedStates));
+                ControlContainer_IndeterminateGrid.Children.Add(CreateControlStateViewer(ctrlType, indeterminateStates));
+            }
         }
     }
 }
