@@ -16,7 +16,7 @@ namespace RedlinesProject
             foreach (var brushName in brushNames)
             {
                 var brush = App.Current.Resources[brushName] as SolidColorBrush;
-                brushes.Add(brushName + ": " + brush.Color.ToString());
+                brushes.Add(BrushNameDictionary.GetShortName(brushName) + ": " + brush.Color.ToString());
             }
             BrushTextBlock.Text = String.Join("\n", brushes);
         }
