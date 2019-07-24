@@ -127,7 +127,7 @@ namespace RedlinesProject
         private void Draw(UIElement container, FrameworkElement fe, Canvas target, int depth)
         {
             // If a tree is collapsed, don't measure it.
-            if (fe.Visibility == Visibility.Collapsed || fe.ActualWidth <= 0 || fe.ActualHeight <= 0)
+            if (fe.Visibility == Visibility.Collapsed || fe.ActualWidth <= 0 || fe.ActualHeight <= 0 || fe.Opacity == 0)
             {
                 return;
             }
