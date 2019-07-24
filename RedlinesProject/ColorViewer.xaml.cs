@@ -4,6 +4,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 
 namespace RedlinesProject
 {
@@ -32,6 +33,21 @@ namespace RedlinesProject
         {
             TraverseVisualToPrepareRedline(sender as DependencyObject);
             DrawColorLabels();
+        }
+
+        private void DrawBoundingRectangle(FrameworkElement frameworkElement)
+        {
+            Rectangle rc = new Rectangle();
+            rc.Width = frameworkElement.ActualWidth;
+            rc.Height = frameworkElement.ActualHeight;
+            rc.Stroke = new SolidColorBrush(Windows.UI.Color.FromArgb(150, 100, 150, 200));
+            rc.StrokeThickness = 1;
+            rc.StrokeDashArray = new DoubleCollection() { 3 };
+            var transform = frameworkElement.TransformToVisual(LayoutRoot);
+            var position = transform.TransformPoint(new Point(0, 0));
+            Canvas.SetLeft(rc, position.X);
+            Canvas.SetTop(rc, position.Y);
+            RedlineCanvas.Children.Add(rc);
         }
 
         private void TraverseVisualToPrepareRedline(DependencyObject obj)
@@ -73,6 +89,7 @@ namespace RedlinesProject
 
             if (brushes.Count > 0)
             {
+                DrawBoundingRectangle(frameworkElement);
                 var t = frameworkElement.TransformToVisual(LayoutRoot);
                 var transform = t.TransformPoint(new Point(0, 0));
                 var content = String.Join(", ", brushes);
