@@ -41,5 +41,10 @@ namespace RedlinesProject
         {
             this.Frame.Navigate(typeof(ControlPage), typeof(Slider));
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlPage), typeof(RadioButton));
+        }
     }
 }

@@ -11,5 +11,7 @@
         <HyperlinkButton Content="Button Redlines" Click="Button_Click"/>
         <HyperlinkButton Content="CheckBox Redlines" Click="Button_Click_1"/>
         <HyperlinkButton Content="Slider Redlines" Click="Button_Click_2"/>
+        <TextBlock Text="Proof of concept only controls" />
+        <HyperlinkButton Content="RadioButton Redlines" Click="Button_Click_3" />
     </StackPanel>
 </Page>

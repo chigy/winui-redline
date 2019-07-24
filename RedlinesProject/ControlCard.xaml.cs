@@ -39,6 +39,7 @@ namespace RedlinesProject
             "CheckedNormal",
             "CheckedPointerOver",
             "CheckedPressed",
+            "Checked",
             "CheckedDisabled",
             "FocusEngagedHorizontal",
             "FocusEngagedVertical",
@@ -51,6 +52,7 @@ namespace RedlinesProject
             "IndeterminatePointerOver",
             "IndeterminatePressed",
             "IndeterminateDisabled",
+            "Indeterminate",
         };
 
         public ControlCard(Type controlType)
@@ -81,6 +83,13 @@ namespace RedlinesProject
                 ControlContainer_SelectedGrid.Children.Add(CreateControlStateViewer(ctrlType, selectedStates));
                 ControlContainer_IndeterminateGrid.Children.Add(CreateControlStateViewer(ctrlType, indeterminateStates));
             }
+            if (ctrlType == typeof(RadioButton))
+            {
+                SelectedLabel.Visibility = Visibility.Visible;
+
+                ControlContainer_SelectedGrid.Children.Add(CreateControlStateViewer(ctrlType, selectedStates));
+            }
+
         }
     }
 }

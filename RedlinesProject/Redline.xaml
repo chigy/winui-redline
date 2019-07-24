@@ -72,6 +72,7 @@
             </Grid>
 
             <TextBlock x:Name="VerticalLabel" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="Red" FontSize="9" Margin="1,-5,0,-5"/>
+
         </Grid>
 
     </Grid>
