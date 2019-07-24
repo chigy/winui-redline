@@ -144,6 +144,7 @@
     <Compile Include="Redline.xaml.cs">
       <DependentUpon>Redline.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RedLineInfo.cs" />
     <Compile Include="RedlineViewer.xaml.cs">
       <DependentUpon>RedlineViewer.xaml</DependentUpon>
     </Compile>

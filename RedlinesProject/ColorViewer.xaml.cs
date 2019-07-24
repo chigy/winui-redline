@@ -12,9 +12,8 @@ namespace RedlinesProject
         public HashSet<string> UsedBrushes { get { return m_usedBrushes; } }
 
         public HashSet<string> m_usedBrushes = new HashSet<string>();
-        private RedlineSide _redlineSide = RedlineSide.Top;
-        private double _redlineHeight = 20;
         private BrushNameDictionary _brushNameDict = new BrushNameDictionary();
+        private List<RedLineInfo> redlineInfos = new List<RedLineInfo>();
 
         public ColorViewer(Type type)
         {
@@ -31,10 +30,11 @@ namespace RedlinesProject
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            TraverseVisualTree(sender as DependencyObject);
+            TraverseVisualToPrepareRedline(sender as DependencyObject);
+            DrawColorLabels();
         }
 
-        private void TraverseVisualTree(DependencyObject obj)
+        private void TraverseVisualToPrepareRedline(DependencyObject obj)
         {
             int count = VisualTreeHelper.GetChildrenCount(obj);
             for (int i = 0; i < count; i++)
@@ -42,13 +42,13 @@ namespace RedlinesProject
                 FrameworkElement child = VisualTreeHelper.GetChild(obj, i) as FrameworkElement;
                 if (child != null && child.Visibility == Visibility.Visible)
                 {
-                    DrawColorBrushRedLine(child);
-                    TraverseVisualTree(child);
+                    PrepareRedlineInfo(child);
+                    TraverseVisualToPrepareRedline(child);
                 }
             }
         }
 
-        private void DrawColorBrushRedLine(FrameworkElement frameworkElement)
+        private void PrepareRedlineInfo(FrameworkElement frameworkElement)
         {
             List<string> brushes = new List<string>();
             foreach (var propertyInfo in frameworkElement.GetType().GetProperties())
@@ -75,23 +75,54 @@ namespace RedlinesProject
             {
                 var t = frameworkElement.TransformToVisual(LayoutRoot);
                 var transform = t.TransformPoint(new Point(0, 0));
-                ColorLabel label = new ColorLabel(String.Join(", ", brushes), _redlineHeight, _redlineSide);
-                Canvas.SetLeft(label, transform.X + frameworkElement.ActualWidth/2);
-                Canvas.SetTop(label, _redlineSide == RedlineSide.Bottom ? transform.Y + frameworkElement.ActualHeight : transform.Y);
+                var content = String.Join(", ", brushes);
+                Point position = new Point(transform.X, transform.Y);
+                RedLineInfo redlineInfo = new RedLineInfo(position, frameworkElement, content);
+                redlineInfos.Add(redlineInfo);
+            }
+        }
+
+        private void DrawColorLabels()
+        {
+            RedlineSide redlineSide = RedlineSide.Top;
+            double redlineHeight = 20;
+            List<double> xPositions = new List<double>();
+            // Reverse sort by x, draw the lines from right to left to avoid line corssing
+            redlineInfos.Sort((a, b) => b.TargetHorizontalCenter().X.CompareTo(a.TargetHorizontalCenter().X));
+            for (int i = 0; i < redlineInfos.Count; i++)
+            {
+                var redline = redlineInfos[i];
+                var label = new ColorLabel(redline.Content, redlineHeight, redlineSide);
+                var position = redline.TargetHorizontalCenter();
+                var x = position.X;
+
+                // Make sure labels are not too close to each other
+                if(i >= 2)
+                {
+                    // We switch side(top/bottom) for each draw, [i-2] is the previous redline thats on the same side.
+                    var previousX = xPositions[i - 2];
+                    if (x > previousX || Math.Abs(x - previousX) < 5)
+                    {
+                        x = previousX - 5;
+                    }
+                }
+
+                xPositions.Add(x);
+                Canvas.SetLeft(label, x);
+                Canvas.SetTop(label, redlineSide == RedlineSide.Bottom ? position.Y + redline.TargetHeight : position.Y);
                 RedlineCanvas.Children.Add(label);
 
                 // Flip drawing position and grow redline height to avoid overlapping
-                if (_redlineSide == RedlineSide.Top)
+                if (redlineSide == RedlineSide.Top)
                 {
-                    _redlineSide = RedlineSide.Bottom;
+                    redlineSide = RedlineSide.Bottom;
                 }
                 else
                 {
-                    _redlineSide = RedlineSide.Top;
-                    _redlineHeight += 30;
+                    redlineSide = RedlineSide.Top;
+                    redlineHeight += 30;
                 }
             }
-
         }
     }
 }
