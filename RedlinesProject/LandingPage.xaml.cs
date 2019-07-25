@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -46,5 +47,26 @@ namespace RedlinesProject
         {
             this.Frame.Navigate(typeof(ControlPage), typeof(RadioButton));
         }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlPage), typeof(ComboBox));
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlPage), typeof(DropDownButton));
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlPage), typeof(HyperlinkButton));
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlPage), typeof(ToggleSwitch));
+        }
+
     }
 }
