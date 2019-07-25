@@ -31,8 +31,29 @@ namespace RedlinesProject
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
         {
-            TraverseVisualToPrepareRedline(sender as DependencyObject);
+            var control = sender as Control;
+            if (control.GetType() == typeof(MenuFlyoutItem))
+            {
+                // Need to pause before drawing to let the control settle.
+                control.SizeChanged += MenuFlyoutItem_SizeChanged;
+                VisualStateManager.GoToState(control, "IconPlaceholder", false);
+            }
+            else
+            {
+                DrawRedlineAndColorTable(sender);
+            }
+        }
+
+        private void DrawRedlineAndColorTable(object obj)
+        {
+            TraverseVisualToPrepareRedline(obj as DependencyObject);
             DrawColorLabels();
+            OutputBrushColorTable();
+        }
+
+        private void MenuFlyoutItem_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            DrawRedlineAndColorTable(sender);
         }
 
         private void DrawBoundingRectangle(FrameworkElement frameworkElement)
@@ -140,6 +161,17 @@ namespace RedlinesProject
                     redlineHeight += 30;
                 }
             }
+        }
+
+        private void OutputBrushColorTable()
+        {
+            List<string> brushes = new List<string>();
+            foreach (var brushName in m_usedBrushes)
+            {
+                var brush = App.Current.Resources[brushName] as SolidColorBrush;
+                brushes.Add(BrushNameDictionary.GetShortName(brushName) + ": " + brush.Color.ToString());
+            }
+            BrushTextBlock.Text = String.Join("\n", brushes);
         }
     }
 }
