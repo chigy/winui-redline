@@ -1,4 +1,4 @@
-# WinUI Redline
+# <img src="https://github.com/chigy/winui-redline/blob/master/RedlinesProject/Assets/Square44x44Logo.scale-100.png" width="70" />WinUI Redline
 An app that generates design values for WinUI.
 
 ## Intended target audiences
