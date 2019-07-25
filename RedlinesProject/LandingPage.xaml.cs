@@ -22,9 +22,19 @@ namespace RedlinesProject
     /// </summary>
     public sealed partial class LandingPage : Page
     {
+        RedlineViewer redlineViewer;
+
         public LandingPage()
         {
             this.InitializeComponent();
+
+            Loaded += LandingPage_Loaded;
+        }
+
+        private void LandingPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            redlineViewer = new RedlineViewer(typeof(MenuFlyoutItem));
+            LayoutRoot.Children.Add(redlineViewer);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -40,6 +50,11 @@ namespace RedlinesProject
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(ControlPage), typeof(Slider));
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlPage), typeof(MenuFlyoutItem));
         }
     }
 }

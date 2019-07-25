@@ -9,7 +9,7 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid x:Name="LayoutRoot" Margin="60" HorizontalAlignment="Center">
+    <Grid x:Name="LayoutRoot" Margin="60" HorizontalAlignment="Center" IsHitTestVisible="False">
         <Canvas x:Name="RedlineCanvas"/>
     </Grid>
 </UserControl>

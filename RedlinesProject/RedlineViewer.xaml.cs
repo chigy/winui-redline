@@ -21,24 +21,6 @@ namespace RedlinesProject
 {
     public sealed partial class RedlineViewer : UserControl
     {
-        public RedlineViewer(Type controlType)
-        {
-            this.InitializeComponent();
-
-            Control c = Activator.CreateInstance(controlType) as Control;
-            c.Loaded += Control_Loaded;
-
-            ControlStateViewer.MakeControlPretty(c, controlType);
-
-            LayoutRoot.Children.Insert(0, c);
-        }
-
-        private void Control_Loaded(object sender, RoutedEventArgs e)
-        {
-            Control c = sender as Control;
-            Draw(LayoutRoot, c, RedlineCanvas);
-        }
-
         private const double _redlineSpace = 20;
         private const double _redlineMinSize = 9;
         private int[] _redlineCount;
@@ -47,28 +29,59 @@ namespace RedlinesProject
 
         private List<string> _unwantedNames = new List<string>() { "HorizontalDecreaseRect" };
 
-        public void Draw(UIElement container, Control c, Canvas target)
+        public RedlineViewer(Type controlType)
         {
-            _control = c;
+            this.InitializeComponent();
+
+            _control = Activator.CreateInstance(controlType) as Control;
+            _control.Loaded += Control_Loaded;
+
+            ControlStateViewer.MakeControlPretty(_control, controlType);
+
+            LayoutRoot.Children.Insert(0, _control);
+        }
+
+        private void Control_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (_control.GetType() == typeof(MenuFlyoutItem))
+            {
+                // Need to pause before drawing to let the control settle.
+                _control.SizeChanged += MenuFlyoutItem_SizeChanged;
+                VisualStateManager.GoToState(_control, "IconPlaceholder", false);
+            }
+            else
+            {
+                Draw();
+            }
+        }
+
+        private void MenuFlyoutItem_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            Draw();
+        }
+
+        public void Draw()
+        {
+            RedlineCanvas.Children.Clear();
             _redlineCount = new int[4];
 
-            GeneralTransform t = c.TransformToVisual(container);
+            GeneralTransform t = _control.TransformToVisual(LayoutRoot);
             _controlPos = t.TransformPoint(new Windows.Foundation.Point(0, 0));
 
-            Debug.WriteLine(c.Name);
+            Debug.WriteLine(_control.Name);
 
             // Draw bounding rectangle
             Rectangle rc = new Rectangle();
-            rc.Width = c.ActualWidth;
-            rc.Height = c.ActualHeight;
+            rc.Width = _control.ActualWidth;
+            rc.Height = _control.ActualHeight;
             rc.Stroke = new SolidColorBrush(Windows.UI.Color.FromArgb(150, 100, 150, 200));
             rc.StrokeThickness = 1;
             rc.StrokeDashArray = new DoubleCollection() { 3 };
             Canvas.SetLeft(rc, _controlPos.X);
             Canvas.SetTop(rc, _controlPos.Y);
-            target.Children.Add(rc);
+            RedlineCanvas.Children.Add(rc);
 
-            Draw(container, c, target, 0);
+            Draw(LayoutRoot, _control, RedlineCanvas, 0);
         }
 
         private void DebugSpaces(int n)
@@ -127,7 +140,7 @@ namespace RedlinesProject
         private void Draw(UIElement container, FrameworkElement fe, Canvas target, int depth)
         {
             // If a tree is collapsed, don't measure it.
-            if (fe.Visibility == Visibility.Collapsed || fe.ActualWidth <= 0 || fe.ActualHeight <= 0)
+            if (fe.Visibility == Visibility.Collapsed || fe.ActualWidth <= 0 || fe.ActualHeight <= 0 || fe.Opacity == 0)
             {
                 return;
             }
@@ -152,7 +165,10 @@ namespace RedlinesProject
             GeneralTransform t = fe.TransformToVisual(container);
             Windows.Foundation.Point pos = t.TransformPoint(new Windows.Foundation.Point(0, 0));
 
-            // Redlines should only be reported underneath the control level
+            bool hasBottomRedline = false;
+            bool hasRightRedline = false;
+
+            // Size and margins should only be reported underneath the control level
             if (depth > 0)
             {
                 var width = fe.Width;
@@ -177,49 +193,6 @@ namespace RedlinesProject
                 }
 
                 var margin = fe.Margin;
-
-                // Padding isn't on FrameworkElement, but it's on a variety of different things; just look up the property directly
-                var padding = new Thickness(0);
-                var paddingProp = fe.GetType().GetProperty("Padding");
-                if (paddingProp != null)
-                {
-                    padding = (Thickness)(paddingProp.GetValue(fe, null));
-                }
-
-                bool hasBottomRedline = false;
-                bool hasRightRedline = false;
-
-                if (padding.Left > 0)
-                {
-                    double x = pos.X;
-                    double y = _controlPos.Y + _control.ActualHeight + 1;
-
-                    AddRedline(x, y, RedlineSide.Bottom, padding.Left, target, depth, fe, "Padding.Left");
-                }
-
-                if (padding.Right > 0)
-                {
-                    double x = pos.X + fe.ActualWidth - padding.Right;
-                    double y = _controlPos.Y + _control.ActualHeight + 1;
-
-                    AddRedline(x, y, RedlineSide.Bottom, padding.Right, target, depth, fe, "Padding.Right");
-                }
-
-                if (padding.Top > 0)
-                {
-                    double x = _controlPos.X + _control.ActualWidth + 1;
-                    double y = pos.Y;
-
-                    AddRedline(x, y, RedlineSide.Right, padding.Top, target, depth, fe, "Padding.Top");
-                }
-
-                if (padding.Bottom > 0)
-                {
-                    double x = _controlPos.X + _control.ActualWidth + 1;
-                    double y = pos.Y + fe.ActualHeight - padding.Bottom;
-
-                    AddRedline(x, y, RedlineSide.Right, padding.Bottom, target, depth, fe, "Padding.Bottom");
-                }
 
                 if (margin.Left > 0)
                 {
@@ -252,15 +225,55 @@ namespace RedlinesProject
 
                     AddRedline(x, y, RedlineSide.Right, margin.Bottom, target, depth, fe, "Margin.Bottom");
                 }
+            }
 
-                if (hasBottomRedline)
-                {
-                    _redlineCount[(int)RedlineSide.Bottom]++;
-                }
-                if (hasRightRedline)
-                {
-                    _redlineCount[(int)RedlineSide.Right]++;
-                }
+            // Padding isn't on FrameworkElement, but it's on a variety of different things; just look up the property directly
+            var padding = new Thickness(0);
+            var paddingProp = fe.GetType().GetProperty("Padding");
+            if (paddingProp != null)
+            {
+                padding = (Thickness)(paddingProp.GetValue(fe, null));
+            }
+
+            if (padding.Left > 0)
+            {
+                double x = pos.X;
+                double y = _controlPos.Y + _control.ActualHeight + 1;
+
+                AddRedline(x, y, RedlineSide.Bottom, padding.Left, target, depth, fe, "Padding.Left");
+            }
+
+            if (padding.Right > 0)
+            {
+                double x = pos.X + fe.ActualWidth - padding.Right;
+                double y = _controlPos.Y + _control.ActualHeight + 1;
+
+                AddRedline(x, y, RedlineSide.Bottom, padding.Right, target, depth, fe, "Padding.Right");
+            }
+
+            if (padding.Top > 0)
+            {
+                double x = _controlPos.X + _control.ActualWidth + 1;
+                double y = pos.Y;
+
+                AddRedline(x, y, RedlineSide.Right, padding.Top, target, depth, fe, "Padding.Top");
+            }
+
+            if (padding.Bottom > 0)
+            {
+                double x = _controlPos.X + _control.ActualWidth + 1;
+                double y = pos.Y + fe.ActualHeight - padding.Bottom;
+
+                AddRedline(x, y, RedlineSide.Right, padding.Bottom, target, depth, fe, "Padding.Bottom");
+            }
+
+            if (hasBottomRedline)
+            {
+                _redlineCount[(int)RedlineSide.Bottom]++;
+            }
+            if (hasRightRedline)
+            {
+                _redlineCount[(int)RedlineSide.Right]++;
             }
         }
     }

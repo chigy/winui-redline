@@ -107,6 +107,12 @@ namespace RedlinesProject
             {
                 c.Width = 150;
             }
+            if (controlType == typeof(MenuFlyoutItem))
+            {
+                MenuFlyoutItem item = c as MenuFlyoutItem;
+                item.Text = "MenuFlyoutItem";
+                item.Icon = new SymbolIcon(Symbol.Setting);
+            }
         }
 
         private void Control_Loaded(object sender, RoutedEventArgs e)
@@ -114,6 +120,11 @@ namespace RedlinesProject
             Control c = sender as Control;
             if (c != null)
             {
+                if (c.GetType() == typeof(MenuFlyoutItem))
+                {
+                    VisualStateManager.GoToState(c, "IconPlaceholder", false);
+                }
+
                 bool foundState = VisualStateManager.GoToState(c, c.DataContext as string, false);
 
                 if(!foundState)
