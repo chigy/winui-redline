@@ -11,6 +11,12 @@
         <HyperlinkButton Content="Button Redlines" Click="Button_Click"/>
         <HyperlinkButton Content="CheckBox Redlines" Click="Button_Click_1"/>
         <HyperlinkButton Content="Slider Redlines" Click="Button_Click_2"/>
-        <HyperlinkButton Content="MenuFlyoutItem Redlines" Click="Button_Click_3"/>
+        <HyperlinkButton Content="MenuFlyoutItem Redlines" Click="Button_Click_MenuFlyoutItem"/>
+        <TextBlock Text="Below controls experimental purposes only" />
+        <HyperlinkButton Content="RadioButton Redlines" Click="Button_Click_3" />
+        <HyperlinkButton Content="ComboBox Redlines" Click="Button_Click_4" />
+        <HyperlinkButton Content="DropDownButton Redlines" Click="Button_Click_5" />
+        <HyperlinkButton Content="HyperlinkButton Redlines" Click="Button_Click_6" />
+        <HyperlinkButton Content="ToggleSwitch Redlines" Click="Button_Click_7" />
     </StackPanel>
 </Page>

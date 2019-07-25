@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.StartScreen;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,14 +28,6 @@ namespace RedlinesProject
         public LandingPage()
         {
             this.InitializeComponent();
-
-            Loaded += LandingPage_Loaded;
-        }
-
-        private void LandingPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            redlineViewer = new RedlineViewer(typeof(MenuFlyoutItem));
-            LayoutRoot.Children.Add(redlineViewer);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -52,9 +45,35 @@ namespace RedlinesProject
             this.Frame.Navigate(typeof(ControlPage), typeof(Slider));
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void Button_Click_MenuFlyoutItem(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(ControlPage), typeof(MenuFlyoutItem));
         }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlPage), typeof(RadioButton));
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlPage), typeof(ComboBox));
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlPage), typeof(DropDownButton));
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlPage), typeof(HyperlinkButton));
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(ControlPage), typeof(ToggleSwitch));
+        }
+
     }
 }

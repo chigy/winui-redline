@@ -37,10 +37,24 @@ namespace RedlinesProject
                 Grid.SetRow(redlineViewer, 1);
                 LightContainer.Children.Add(redlineViewer);
 
+                ColorViewer colorViewer = new ColorViewer(e.Parameter as Type);
+                Grid.SetRow(colorViewer, 2);
+                LightContainer.Children.Add(colorViewer);
+
+                colorViewer.Loaded += LightColorViewer_Loaded;
+
                 DarkContainer.Children.Add(new ControlCard(e.Parameter as Type));
             }
 
             base.OnNavigatedTo(e);
+        }
+
+        private void LightColorViewer_Loaded(object sender, RoutedEventArgs e)
+        {
+            ColorViewer colorViewer = sender as ColorViewer;
+            ColorTable lightColorTable = new ColorTable(colorViewer.UsedBrushes);
+            Grid.SetRow(lightColorTable, 3);
+            LightContainer.Children.Add(lightColorTable);
         }
 
         private void AppBarButton_Click(object sender, RoutedEventArgs e)

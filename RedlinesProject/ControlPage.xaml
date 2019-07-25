@@ -23,15 +23,26 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid x:Name="LightContainer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-              Grid.Column="0" Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-            </Grid>
-            <Grid x:Name="DarkContainer" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" RequestedTheme="Dark"
-              Grid.Column="1" Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"/>
+            <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                Grid.Column="0" Grid.Row="1" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid x:Name="LightContainer">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                </Grid>
+            </ScrollViewer>
+            <ScrollViewer VerticalAlignment="Stretch" HorizontalAlignment="Stretch" RequestedTheme="Dark"
+                Grid.Column="1" Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                <Grid x:Name="DarkContainer">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                </Grid>
+            </ScrollViewer>
         </Grid>
     </Grid>
 </Page>
