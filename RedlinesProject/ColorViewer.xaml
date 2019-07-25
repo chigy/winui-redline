@@ -9,7 +9,16 @@
     d:DesignHeight="300"
     d:DesignWidth="400">
 
-    <Grid x:Name="LayoutRoot" Margin="100">
+    <Grid x:Name="LayoutRoot" Margin="100" IsHitTestVisible="False">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Canvas x:Name="RedlineCanvas"/>
+        <Grid Grid.Row="1"
+            Margin="0,150,0,0" Width="300" HorizontalAlignment="Left">
+            <Border BorderThickness="1" BorderBrush="Red" CornerRadius="2"/>
+            <TextBlock x:Name="BrushTextBlock" Foreground="Red" Margin="20"/>
+        </Grid>
     </Grid>
 </UserControl>

@@ -122,9 +122,6 @@
     <Compile Include="ColorLabel.xaml.cs">
       <DependentUpon>ColorLabel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ColorTable.xaml.cs">
-      <DependentUpon>ColorTable.xaml</DependentUpon>
-    </Compile>
     <Compile Include="ColorViewer.xaml.cs">
       <DependentUpon>ColorViewer.xaml</DependentUpon>
     </Compile>
@@ -173,10 +170,6 @@
     <Page Include="ColorLabel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="ColorTable.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ColorViewer.xaml">
       <SubType>Designer</SubType>
